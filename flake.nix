@@ -1,7 +1,7 @@
 {
   description = "A flake that defines development shells that I need frequently.";
-
-  outputs = {
+  inputs = { };
+  outputs = inputs: {
     lib.mkEnv =
       {
         pkgs,
