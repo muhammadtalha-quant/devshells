@@ -1,15 +1,23 @@
 {
-  description = "A very basic flake";
+  description = "A flake that defines development shells that I need frequently.";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs: {
-    packages = builtins.mapAttrs (system: pkgs: {
-      hello = pkgs.hello;
-
-      default = inputs.self.packages.${system}.hello;
-    }) inputs.nixpkgs.legacyPackages;
-  };
+  outputs = inputs: 
+  let 
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+  {
+      devShells.${system} = {
+           nix = pkgs.mkShellNoCC {
+                packages = with pkgs; [
+                  nil 
+                  nixfmt 
+                  statix
+                ];            
+           };
+      };
+  }
 }
