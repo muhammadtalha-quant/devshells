@@ -20,7 +20,7 @@
         ];
       in
       if builtins.elem lang languages then
-        (import ./shells/${lang}) { inherit pkgs; }
+        (import ./shells/${lang}.nix) { inherit pkgs; }
       else
         pkgs.mkShellNoCC { };
   };
